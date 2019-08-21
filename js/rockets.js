@@ -6,7 +6,8 @@ const Rockets = function() {
         rockets.push(new Rocket(
             -500,
             -Rockets.X_OFFSET + Math.random() * Rockets.X_OFFSET * 2,
-            800));
+            800,
+            new Palette()));
     };
 
     this.setOffset = newOffset => offset = newOffset;

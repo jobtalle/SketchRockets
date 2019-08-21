@@ -1,6 +1,6 @@
-const Rocket = function(x, y, trailLength) {
+const Rocket = function(x, y, trailLength, palette) {
     const length = Rocket.LENGTH_MIN + (Rocket.LENGTH_MAX - Rocket.LENGTH_MIN) * Math.random();
-    const body = new Body(length);
+    const body = new Body(length, palette);
     const trail = new Trail(trailLength);
     const angleCompensation = 3;
     const noiseX = cubicNoiseConfig(Math.random());

@@ -1,5 +1,5 @@
 const TIME_STEP_MAX = 0.1;
-const LINE_WIDTH = 3;
+const LINE_WIDTH = 2;
 
 const wrapper = document.getElementById("wrapper");
 const canvas = document.getElementById("renderer");

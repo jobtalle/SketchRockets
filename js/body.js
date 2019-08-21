@@ -1,4 +1,4 @@
-const Body = function(length) {
+const Body = function(length, palette) {
     const widths = [];
     const nose = (Body.NOSE_MIN + (Body.NOSE_MAX - Body.NOSE_MIN) * Math.random()) * length;
     const segments = Math.ceil((length + nose) / Body.RESOLUTION);
@@ -49,9 +49,9 @@ const Body = function(length) {
 
         context.translate(nose + length * 0.5, 0);
 
-        fins.drawBack(context, spin);
-        drawTube(context, widths, step, "red", Body.STROKE);
-        fins.drawFront(context, spin);
+        fins.drawBack(context, spin, palette.fillFin, Body.STROKE);
+        drawTube(context, widths, step, palette.fillBody, Body.STROKE);
+        fins.drawFront(context, palette.fillFin, Body.STROKE);
 
         context.restore();
     };

@@ -35,13 +35,11 @@ const Fins = function(length, width, widths, step) {
             makeOffsetsPower();
     };
 
-    const drawFin = (context, spin) => {
+    const drawFin = (context, spin, stroke) => {
         context.save();
         context.scale(1, Math.sin(spin * Math.PI * 2));
 
-        context.fillStyle = "lime";
         context.beginPath();
-
         context.moveTo(
             -widths.length * step,
             -widths[widths.length - 1]);
@@ -58,8 +56,6 @@ const Fins = function(length, width, widths, step) {
 
         context.closePath();
         context.fill();
-
-        context.strokeStyle = "green";
         context.stroke();
 
         context.restore();
@@ -76,14 +72,20 @@ const Fins = function(length, width, widths, step) {
             ++frontThreshold;
     };
 
-    this.drawBack = (context, spin) => {
+    this.drawBack = (context, spin, fill, stroke) => {
         setSpins(spin);
+
+        context.fillStyle = fill;
+        context.strokeStyle = stroke;
 
         for (let i = 0; i < frontThreshold; ++i)
             drawFin(context, spins[i]);
     };
 
-    this.drawFront = (context, spin) => {
+    this.drawFront = (context, fill, stroke) => {
+        context.fillStyle = fill;
+        context.strokeStyle = stroke;
+
         for (let i = frontThreshold; i < spins.length; ++i)
             drawFin(context, spins[i]);
     };
@@ -92,7 +94,7 @@ const Fins = function(length, width, widths, step) {
 };
 
 Fins.TRIANGLE_CHANCE = 0.3;
-Fins.POWER_OVERSHOOT_CHANCE = 0.5;
+Fins.POWER_OVERSHOOT_CHANCE = 0.7;
 Fins.POWER_OVERSHOT_MIN = 1.2;
 Fins.POWER_OVERSHOT_MAX = 2;
 Fins.LENGTH_MIN = 0.3;
