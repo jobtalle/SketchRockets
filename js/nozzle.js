@@ -21,12 +21,12 @@ const Nozzle = function(width) {
     this.draw = (context, x, vy) => {
         context.save();
 
-        context.translate(x + inset, 0);
+        context.translate(x, 0);
         context.rotate(vy * Nozzle.SWIZZLE_FACTOR);
 
         drawTube(context, widths, step, "gray", Nozzle.STROKE);
 
-        for (let i = Math.ceil(inset / step) - 1; i < widths.length; ++i) {
+        for (let i = Math.ceil(inset / step) - 1; i < widths.length - 1; ++i) {
             context.beginPath();
             context.moveTo(-(i + 1) * step, -widths[i]);
             context.lineTo(-(i + 1) * step, widths[i]);
@@ -45,6 +45,6 @@ Nozzle.LENGTH_MAX = 4;
 Nozzle.RESOLUTION = 8;
 Nozzle.NOSE_POWER_MIN = 0.2;
 Nozzle.NOSE_POWER_MAX = 1.4;
-Nozzle.INSET_MIN = 0;
+Nozzle.INSET_MIN = 0.05;
 Nozzle.INSET_MAX = 0.4;
 Nozzle.SWIZZLE_FACTOR = 0.0005;

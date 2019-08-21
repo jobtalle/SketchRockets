@@ -5,6 +5,7 @@ const Body = function(length) {
     const step = (length + nose) / segments;
     const width = Math.min(length * (Body.WIDTH_MIN + (Body.WIDTH_MAX - Body.WIDTH_MIN) * Math.random()), Body.WIDTH_MAX_PIXELS);
     let nozzle = null;
+    let fins = null;
 
     const makeWidthsRound = () => {
         const bodyPower = Body.BODY_POWER_MIN + (Body.BODY_POWER_MAX - Body.BODY_POWER_MIN) * Math.random();
@@ -16,6 +17,7 @@ const Body = function(length) {
         }
 
         nozzle = new Nozzle(width);
+        fins = new Fins(length + nozzle.getLength(), widths, step);
     };
 
     const makeWidthsTube = () => {
@@ -28,6 +30,7 @@ const Body = function(length) {
         }
 
         nozzle = new Nozzle(width);
+        fins = new Fins(length, widths, step);
     };
 
     const makeWidths = () => {
@@ -37,16 +40,18 @@ const Body = function(length) {
             makeWidthsTube();
     };
 
-    this.getTrailOffset = () => (nozzle.getLength() - nozzle.getInset()) * 0.5;
+    this.getTrailOffset = () => (length + nozzle.getLength()) * 0.5 - nozzle.getInset();
 
-    this.draw = (context, vy) => {
+    this.draw = (context, vy, spin) => {
         context.save();
 
-        nozzle.draw(context, -length * 0.5, vy);
+        nozzle.draw(context, -length * 0.5 + nozzle.getInset(), vy);
 
         context.translate(nose + length * 0.5, 0);
 
+        fins.drawBack(context, spin);
         drawTube(context, widths, step, "red", Body.STROKE);
+        fins.drawFront(context, spin);
 
         context.restore();
     };

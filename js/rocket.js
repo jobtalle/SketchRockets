@@ -6,6 +6,8 @@ const Rocket = function(x, y, trailLength) {
     const noiseX = cubicNoiseConfig(Math.random());
     const noiseY = cubicNoiseConfig(Math.random());
     const vxFactor = 4;
+    const spinSpeed = Rocket.SPIN_SPEED_MIN + (Rocket.SPIN_SPEED_MAX - Rocket.SPIN_SPEED_MIN) * Math.random();
+    let spin = 0;
     let vx = 0;
     let vy = 0;
     let noiseDist = 0;
@@ -14,6 +16,12 @@ const Rocket = function(x, y, trailLength) {
 
     this.update = (timeStep, skySpeed) => {
         noiseDist += timeStep * Rocket.NOISE_SCALE;
+        spin += spinSpeed * timeStep;
+
+        if (spin < 0)
+            ++spin;
+        else if (spin > 1)
+            --spin;
 
         const xAim = Rocket.AIM_DISTANCE + (cubicNoiseSample1(noiseX, noiseDist) - 0.5) * Rocket.AIM_WIGGLE_X * 2;
         const yAim = (cubicNoiseSample1(noiseY, noiseDist) - 0.5) * Rocket.AIM_WIGGLE_Y * 2;
@@ -29,7 +37,7 @@ const Rocket = function(x, y, trailLength) {
         y += vy * timeStep;
 
         trail.update(timeStep, skySpeed + Rocket.TRAIL_SPEED);
-        trail.append(x - Math.cos(angle) * length * 0.5 - body.getTrailOffset(), y - Math.sin(angle) * length * 0.5, -vy);
+        trail.append(x - Math.cos(angle) * body.getTrailOffset(), y - Math.sin(angle) * body.getTrailOffset(), -vy);
     };
 
     this.draw = context => {
@@ -39,7 +47,7 @@ const Rocket = function(x, y, trailLength) {
         context.translate(x, y);
         context.rotate(angle);
 
-        body.draw(context, vy);
+        body.draw(context, vy, spin);
 
         context.restore();
     };
@@ -53,3 +61,5 @@ Rocket.AIM_WIGGLE_Y = 300;
 Rocket.DAMPING = 0.7;
 Rocket.LENGTH_MIN = 50;
 Rocket.LENGTH_MAX = 150;
+Rocket.SPIN_SPEED_MIN = -0.7;
+Rocket.SPIN_SPEED_MAX = 0.7;
