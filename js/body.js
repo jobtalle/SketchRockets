@@ -4,6 +4,7 @@ const Body = function(length, palette) {
     const segments = Math.ceil((length + nose) / Body.RESOLUTION);
     const step = (length + nose) / segments;
     const width = Math.min(length * (Body.WIDTH_MIN + (Body.WIDTH_MAX - Body.WIDTH_MIN) * Math.random()), Body.WIDTH_MAX_PIXELS);
+    let maxWidth = width;
     let nozzle = null;
     let fins = null;
 
@@ -12,8 +13,12 @@ const Body = function(length, palette) {
 
         for (let i = 0; i < segments; ++i) {
             const f = Math.min(((i + 1) * step) / (length + nose), 1);
+            const w = width * Math.pow(Math.cos((f * (0.5 + 1 / 3) - 0.5) * Math.PI) * 2, bodyPower);
 
-            widths.push(width * Math.pow(Math.cos((f * (0.5 + 1 / 3) - 0.5) * Math.PI) * 2, bodyPower));
+            if (w > maxWidth)
+                maxWidth = w;
+
+            widths.push(w);
         }
 
         nozzle = new Nozzle(width);
@@ -43,15 +48,26 @@ const Body = function(length, palette) {
     this.getTrailOffset = () => (length + nozzle.getLength()) * 0.5 - nozzle.getInset();
 
     this.draw = (context, vy, spin) => {
+        const gradientBody = context.createLinearGradient(0, -maxWidth, 0, maxWidth);
+        const gradientFins = context.createLinearGradient(0, -maxWidth, 0, maxWidth);
+
+        gradientBody.addColorStop(0, palette.colorBodyShade);
+        gradientBody.addColorStop(0.5, palette.colorBody);
+        gradientBody.addColorStop(1, palette.colorBodyShade);
+
+        gradientFins.addColorStop(0, palette.colorFin);
+        gradientFins.addColorStop(0.5, palette.colorFinShade);
+        gradientFins.addColorStop(1, palette.colorFin);
+
         context.save();
 
         nozzle.draw(context, -length * 0.5 + nozzle.getInset(), vy);
 
         context.translate(nose + length * 0.5, 0);
 
-        fins.drawBack(context, spin, palette.fillFin, Body.STROKE);
-        drawTube(context, widths, step, palette.fillBody, Body.STROKE);
-        fins.drawFront(context, palette.fillFin, Body.STROKE);
+        fins.drawBack(context, spin, gradientFins, Body.STROKE);
+        drawTube(context, widths, step, gradientBody, Body.STROKE);
+        fins.drawFront(context, gradientFins, Body.STROKE);
 
         context.restore();
     };
