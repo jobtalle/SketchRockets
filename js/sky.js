@@ -24,5 +24,5 @@ const Sky = function() {
 };
 
 Sky.ANGLE = Math.PI * 1.6;
-Sky.SPEED = 800;
+Sky.SPEED = 1600;
 Sky.VIEW_SHIFT = 0.2;

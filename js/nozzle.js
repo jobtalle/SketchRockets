@@ -3,6 +3,7 @@ const Nozzle = function(width) {
     const widths = [];
     const segments = Math.ceil(length / Nozzle.RESOLUTION);
     const step = length / segments;
+    const inset = length * (Nozzle.INSET_MIN + (Nozzle.INSET_MAX - Nozzle.INSET_MIN) * Math.random());
 
     const make = () => {
         const nosePower = Nozzle.NOSE_POWER_MIN + (Nozzle.NOSE_POWER_MAX - Nozzle.NOSE_POWER_MIN) * Math.random();
@@ -14,8 +15,14 @@ const Nozzle = function(width) {
         }
     };
 
+    this.getLength = () => length;
+    this.getInset = () => inset;
+
     this.draw = context => {
         context.save();
+
+        context.translate(inset, 0);
+
         context.beginPath();
         context.moveTo(0, 0);
 
@@ -33,6 +40,13 @@ const Nozzle = function(width) {
         context.strokeStyle = Nozzle.STROKE;
         context.stroke();
 
+        for (let i = Math.ceil(inset / step) - 1; i < widths.length; ++i) {
+            context.beginPath();
+            context.moveTo(-(i + 1) * step, -widths[i]);
+            context.lineTo(-(i + 1) * step, widths[i]);
+            context.stroke();
+        }
+
         context.restore();
     };
 
@@ -40,8 +54,10 @@ const Nozzle = function(width) {
 };
 
 Nozzle.STROKE = "#3b3b3b";
-Nozzle.LENGTH_MIN = 1;
-Nozzle.LENGTH_MAX = 2.5;
-Nozzle.RESOLUTION = 16;
+Nozzle.LENGTH_MIN = 1.5;
+Nozzle.LENGTH_MAX = 4;
+Nozzle.RESOLUTION = 8;
 Nozzle.NOSE_POWER_MIN = 0.2;
-Nozzle.NOSE_POWER_MAX = 0.9;
+Nozzle.NOSE_POWER_MAX = 1.4;
+Nozzle.INSET_MIN = 0.1;
+Nozzle.INSET_MAX = 0.4;

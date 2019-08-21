@@ -27,7 +27,7 @@ const Rocket = function(x, y, trailLength) {
         y += vy * timeStep;
 
         trail.update(timeStep, skySpeed + Rocket.TRAIL_SPEED);
-        trail.append(x - Math.cos(angle) * length * 0.5, y - Math.sin(angle) * length * 0.5, -vy);
+        trail.append(x - Math.cos(angle) * length * 0.5 - body.getTrailOffset(), y - Math.sin(angle) * length * 0.5, -vy);
     };
 
     this.draw = context => {
@@ -39,13 +39,6 @@ const Rocket = function(x, y, trailLength) {
 
         body.draw(context);
 
-        /*
-        context.fillStyle = "#ce3927";
-        context.beginPath();
-        context.rect(-length * 0.5, -20, length, 40);
-        context.fill();
-         */
-
         context.restore();
     };
 };
@@ -56,5 +49,5 @@ Rocket.AIM_DISTANCE = 800;
 Rocket.AIM_WIGGLE_X = 100;
 Rocket.AIM_WIGGLE_Y = 300;
 Rocket.DAMPING = 0.5;
-Rocket.LENGTH_MIN = 100;
-Rocket.LENGTH_MAX = 200;
+Rocket.LENGTH_MIN = 50;
+Rocket.LENGTH_MAX = 150;

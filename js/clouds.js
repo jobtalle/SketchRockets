@@ -18,38 +18,33 @@ const Clouds = function() {
         }
     };
 
+    const drawLayer = (context, radius, layer, shift) => {
+        radius /= Clouds.SCALE;
+
+        context.save();
+        context.scale(Clouds.SCALE, Clouds.SCALE);
+
+        for (let y = Math.floor(-radius / Clouds.RESOLUTION) * Clouds.RESOLUTION; y < radius; y += Clouds.RESOLUTION)
+            for (let x = Math.floor(-radius / Clouds.RESOLUTION) * Clouds.RESOLUTION + shift; x < radius; x += Clouds.RESOLUTION)
+                context.drawImage(layer, x, y);
+
+        context.restore();
+    };
+
     this.update = (timeStep, skySpeed) => {
-        if ((shiftBack -= timeStep * skySpeed * Clouds.SPEED_SCALE_BACK) < -Clouds.RESOLUTION)
+        if ((shiftBack -= timeStep * skySpeed * Clouds.SPEED_SCALE_BACK / Clouds.SCALE) < -Clouds.RESOLUTION)
             shiftBack += Clouds.RESOLUTION;
 
-        if ((shiftFront -= timeStep * skySpeed * Clouds.SPEED_SCALE_FRONT) < -Clouds.RESOLUTION)
+        if ((shiftFront -= timeStep * skySpeed * Clouds.SPEED_SCALE_FRONT / Clouds.SCALE) < -Clouds.RESOLUTION)
             shiftFront += Clouds.RESOLUTION;
     };
 
     this.drawBack = (context, radius) => {
-        radius /= Clouds.SCALE;
-
-        context.save();
-        context.scale(Clouds.SCALE, Clouds.SCALE);
-
-        for (let y = Math.floor(-radius / Clouds.RESOLUTION) * Clouds.RESOLUTION; y < radius; y += Clouds.RESOLUTION)
-            for (let x = Math.floor(-radius / Clouds.RESOLUTION) * Clouds.RESOLUTION + shiftBack; x < radius; x += Clouds.RESOLUTION)
-                context.drawImage(layerBack, x, y);
-
-        context.restore();
+        drawLayer(context, radius, layerBack, shiftBack);
     };
 
     this.drawFront = (context, radius) => {
-        radius /= Clouds.SCALE;
-
-        context.save();
-        context.scale(Clouds.SCALE, Clouds.SCALE);
-
-        for (let y = Math.floor(-radius / Clouds.RESOLUTION) * Clouds.RESOLUTION; y < radius; y += Clouds.RESOLUTION)
-            for (let x = Math.floor(-radius / Clouds.RESOLUTION) * Clouds.RESOLUTION + shiftFront; x < radius; x += Clouds.RESOLUTION)
-                context.drawImage(layerFront, x, y);
-
-        context.restore();
+        drawLayer(context, radius, layerFront, shiftFront);
     };
 
     paintLayer(layerBack);
