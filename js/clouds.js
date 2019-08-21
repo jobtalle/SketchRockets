@@ -10,7 +10,7 @@ const Clouds = function() {
         const context = canvas.getContext("2d");
 
         for (let i = 0; i < 20; ++i) {
-            context.fillStyle = "rgba(255, 255, 255, 0.4)";
+            context.fillStyle = "rgba(255,255,255,0.18)";
 
             context.beginPath();
             context.arc(Math.random() * canvas.width, Math.random() * canvas.height, 32, 0, Math.PI * 2);

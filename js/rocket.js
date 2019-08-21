@@ -1,5 +1,6 @@
-const Rocket = function(x, y) {
-    const angleCompensation = 2;
+const Rocket = function(x, y, trailLength) {
+    const trail = new Trail(trailLength);
+    const angleCompensation = 3;
     const noiseX = cubicNoiseConfig(Math.random());
     const noiseY = cubicNoiseConfig(Math.random());
     const vxFactor = 4;
@@ -10,12 +11,15 @@ const Rocket = function(x, y) {
     let yAim = 0;
 
     this.update = (timeStep, skySpeed) => {
+        trail.update(timeStep, skySpeed + Rocket.TRAIL_SPEED);
+        trail.append(x, y);
+
         noiseDist += timeStep * Rocket.NOISE_SCALE;
         xAim = Rocket.AIM_DISTANCE + (cubicNoiseSample1(noiseX, noiseDist) - 0.5) * Rocket.AIM_WIGGLE_X * 2;
         yAim = (cubicNoiseSample1(noiseY, noiseDist) - 0.5) * Rocket.AIM_WIGGLE_Y * 2;
 
         velocity += (xAim - x - Rocket.AIM_DISTANCE) * vxFactor * timeStep;
-        velocity *= 0.99;
+        velocity -= velocity * Rocket.DAMPING * timeStep;
 
         angle = Math.atan2((yAim - y) * angleCompensation, xAim - x + skySpeed);
         x += Math.cos(angle) * velocity * timeStep;
@@ -23,6 +27,8 @@ const Rocket = function(x, y) {
     };
 
     this.draw = context => {
+        trail.draw(context);
+
         context.save();
         context.translate(x, y);
         context.rotate(angle);
@@ -36,7 +42,9 @@ const Rocket = function(x, y) {
     };
 };
 
-Rocket.NOISE_SCALE = 2.6;
+Rocket.TRAIL_SPEED = 200;
+Rocket.NOISE_SCALE = 2.2;
 Rocket.AIM_DISTANCE = 800;
-Rocket.AIM_WIGGLE_X = 256;
-Rocket.AIM_WIGGLE_Y = 300;
+Rocket.AIM_WIGGLE_X = 200;
+Rocket.AIM_WIGGLE_Y = 400;
+Rocket.DAMPING = 0.5;
