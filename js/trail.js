@@ -1,7 +1,8 @@
 const Trail = function(length) {
-    const Point = function(x, y) {
+    const Point = function(x, y, ySpeed) {
         this.x = x;
         this.y = y;
+        this.ySpeed = ySpeed;
         this.thickness = Trail.THICKNESS_MIN + (Trail.THICKNESS_MAX - Trail.THICKNESS_MIN) * Math.random();
         this.life = 0;
     };
@@ -9,19 +10,20 @@ const Trail = function(length) {
     Point.prototype.update = function(timeStep, speed) {
         this.life += timeStep;
         this.x -= timeStep * speed;
+        this.y += timeStep * this.ySpeed;
     };
 
     const points = [];
 
-    this.append = (x, y) => {
+    this.append = (x, y, ySpeed) => {
         if (points.length < 2)
-            points.unshift(new Point(x, y));
+            points.unshift(new Point(x, y, ySpeed));
         else {
             const dx = points[0].x - points[1].x;
             const dy = points[0].y - points[1].y;
 
             if (dx * dx + dy * dy > Trail.RESOLUTION * Trail.RESOLUTION)
-                points.unshift(new Point(x, y));
+                points.unshift(new Point(x, y, ySpeed));
             else {
                 points[0].x = x;
                 points[0].y = y;
@@ -62,9 +64,14 @@ const Trail = function(length) {
 
         context.closePath();
         context.fill();
+
+        context.lineWidth = 2;
+        context.strokeStyle = Trail.STROKE;
+        context.stroke();
     };
 };
 
+Trail.STROKE = "#6a6a6a";
 Trail.COLORS = [
     "rgb(255,199,15)",
     "rgba(205,205,205,0.58)"
