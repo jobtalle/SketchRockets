@@ -1,4 +1,5 @@
 const TIME_STEP_MAX = 0.1;
+const LINE_WIDTH = 2.5;
 
 const wrapper = document.getElementById("wrapper");
 const canvas = document.getElementById("renderer");
@@ -19,6 +20,7 @@ const update = timeStep => {
     const context = canvas.getContext("2d");
 
     context.clearRect(0, 0, canvas.width, canvas.height);
+    context.lineWidth = LINE_WIDTH;
 
     sky.draw(context, canvas.width * 0.5, canvas.height * 0.5, radius);
 };

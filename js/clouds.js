@@ -16,7 +16,10 @@ const Clouds = function() {
 
         for (let i = 0; i < Clouds.OCTAVES; amp /= falloff, ++i) {
             octaves.push(amp);
-            noises.push(cubicNoiseConfig(Math.random(), Clouds.PHASES, Clouds.PHASES));
+            noises.push(cubicNoiseConfig(
+                Math.random(),
+                Clouds.RESOLUTION / (Clouds.PHASE / Clouds.SCALE),
+                Clouds.RESOLUTION / (Clouds.PHASE / Clouds.SCALE)));
         }
 
         for (let y = 0; y < canvas.height; ++y) for (let x = 0; x < canvas.width; ++x) {
@@ -24,7 +27,7 @@ const Clouds = function() {
             let transparency = 0;
 
             for (let i = 0; i < octaves.length; ++i) {
-                const scale = Clouds.PHASES / Clouds.RESOLUTION * (i + 1);
+                const scale = 1 / (Clouds.PHASE / Clouds.SCALE) * (i + 1);
 
                 transparency += octaves[i] * Math.max(0, cubicNoiseSample2(noises[i], 4 + x * scale, 4 + y * scale) - Clouds.DEADZONE);
             }
@@ -69,13 +72,13 @@ const Clouds = function() {
     paintLayer(layerFront);
 };
 
-Clouds.RESOLUTION = 512;
-Clouds.PHASES = 8;
-Clouds.OCTAVES = 3;
-Clouds.FALLOFF = 1.7;
+Clouds.RESOLUTION = 256;
+Clouds.PHASE = 512;
+Clouds.OCTAVES = 4;
+Clouds.FALLOFF = 1.65;
 Clouds.DEADZONE = 0.55;
 Clouds.POWER = 0.6;
-Clouds.SCALE = 5;
-Clouds.SPEED_SCALE_BACK = 0.6;
+Clouds.SCALE = 8;
+Clouds.SPEED_SCALE_BACK = 0.7;
 Clouds.SPEED_SCALE_FRONT = 1.2;
 Clouds.ALPHA = 0.9;

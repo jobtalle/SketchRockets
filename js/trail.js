@@ -65,7 +65,6 @@ const Trail = function(length) {
         context.closePath();
         context.fill();
 
-        context.lineWidth = 2;
         context.strokeStyle = Trail.STROKE;
         context.stroke();
     };
