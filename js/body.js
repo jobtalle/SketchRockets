@@ -41,26 +41,12 @@ const Body = function(length) {
 
     this.draw = (context, vy) => {
         context.save();
-        context.translate(-length * 0.5, 0);
 
-        nozzle.draw(context, vy);
+        nozzle.draw(context, -length * 0.5, vy);
 
-        context.beginPath();
-        context.moveTo(widths.length * step, 0);
+        context.translate(nose + length * 0.5, 0);
 
-        for (let i = 0; i < widths.length; ++i)
-            context.lineTo((widths.length - i - 1) * step, -widths[i]);
-
-        for (let i = widths.length; i-- > 0;)
-            context.lineTo((widths.length - i - 1) * step, widths[i]);
-
-        context.closePath();
-
-        context.fillStyle = "red";
-        context.fill();
-
-        context.strokeStyle = Body.STROKE;
-        context.stroke();
+        drawTube(context, widths, step, "red", Body.STROKE);
 
         context.restore();
     };

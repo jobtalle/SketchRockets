@@ -18,28 +18,13 @@ const Nozzle = function(width) {
     this.getLength = () => length;
     this.getInset = () => inset;
 
-    this.draw = (context, vy) => {
+    this.draw = (context, x, vy) => {
         context.save();
 
+        context.translate(x + inset, 0);
         context.rotate(vy * Nozzle.SWIZZLE_FACTOR);
-        context.translate(inset, 0);
 
-        context.beginPath();
-        context.moveTo(0, 0);
-
-        for (let i = 0; i < widths.length; ++i)
-            context.lineTo(-(i + 1) * step, -widths[i]);
-
-        for (let i = widths.length; i-- > 0;)
-            context.lineTo(-(i + 1) * step, widths[i]);
-
-        context.closePath();
-
-        context.fillStyle = "gray";
-        context.fill();
-
-        context.strokeStyle = Nozzle.STROKE;
-        context.stroke();
+        drawTube(context, widths, step, "gray", Nozzle.STROKE);
 
         for (let i = Math.ceil(inset / step) - 1; i < widths.length; ++i) {
             context.beginPath();
