@@ -3,6 +3,7 @@ const Body = function(length) {
     const nose = (Body.NOSE_MIN + (Body.NOSE_MAX - Body.NOSE_MIN) * Math.random()) * length;
     const segments = Math.ceil((length + nose) / Body.RESOLUTION);
     const step = (length + nose) / segments;
+    let nozzle = null;
 
     const makeWidthsRound = () => {
 
@@ -17,6 +18,8 @@ const Body = function(length) {
 
             widths.push(width * Math.pow(Math.cos((f * 0.5 - 0.5) * Math.PI), nosePower));
         }
+
+        nozzle = new Nozzle(width);
     };
 
     const makeWidths = () => {
@@ -51,13 +54,15 @@ const Body = function(length) {
         context.strokeStyle = Body.STROKE;
         context.stroke();
 
+        nozzle.draw(context);
+
         context.restore();
     };
 
     makeWidths();
 };
 
-Body.STROKE = "#3b3b3b";
+Body.STROKE = Nozzle.STROKE;
 Body.NOSE_POWER_MIN = 0.4;
 Body.NOSE_POWER_MAX = 1;
 Body.WIDTH_MIN = 0.08;
