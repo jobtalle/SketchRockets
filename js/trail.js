@@ -70,7 +70,7 @@ const Trail = function(length) {
     };
 };
 
-Trail.STROKE = "#6a6a6a";
+Trail.STROKE = "#818181";
 Trail.COLORS = [
     "rgb(255,199,15)",
     "rgba(205,205,205,0.58)"

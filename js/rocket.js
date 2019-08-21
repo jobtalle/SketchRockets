@@ -50,6 +50,6 @@ Rocket.NOISE_SCALE = 2.2;
 Rocket.AIM_DISTANCE = 800;
 Rocket.AIM_WIGGLE_X = 100;
 Rocket.AIM_WIGGLE_Y = 300;
-Rocket.DAMPING = 0.5;
+Rocket.DAMPING = 0.7;
 Rocket.LENGTH_MIN = 50;
 Rocket.LENGTH_MAX = 150;
