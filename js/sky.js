@@ -5,8 +5,8 @@ const Sky = function() {
     this.setOffset = offset => rockets.setOffset(offset);
 
     this.update = timeStep => {
-        clouds.update(timeStep);
-        rockets.update(timeStep);
+        clouds.update(timeStep, Sky.SPEED);
+        rockets.update(timeStep, Sky.SPEED);
     };
 
     this.draw = (context, xCenter, yCenter, radius) => {
@@ -23,3 +23,4 @@ const Sky = function() {
 };
 
 Sky.ANGLE = Math.PI * 1.6;
+Sky.SPEED = 650;

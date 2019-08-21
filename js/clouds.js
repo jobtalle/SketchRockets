@@ -18,11 +18,11 @@ const Clouds = function() {
         }
     };
 
-    this.update = timeStep => {
-        if ((shiftBack -= timeStep * Clouds.SPEED * Clouds.SPEED_SCALE_BACK) < -Clouds.RESOLUTION)
+    this.update = (timeStep, skySpeed) => {
+        if ((shiftBack -= timeStep * skySpeed * Clouds.SPEED_SCALE_BACK) < -Clouds.RESOLUTION)
             shiftBack += Clouds.RESOLUTION;
 
-        if ((shiftFront -= timeStep * Clouds.SPEED * Clouds.SPEED_SCALE_FRONT) < -Clouds.RESOLUTION)
+        if ((shiftFront -= timeStep * skySpeed * Clouds.SPEED_SCALE_FRONT) < -Clouds.RESOLUTION)
             shiftFront += Clouds.RESOLUTION;
     };
 
@@ -49,14 +49,6 @@ const Clouds = function() {
             for (let x = Math.floor(-radius / Clouds.RESOLUTION) * Clouds.RESOLUTION + shiftFront; x < radius; x += Clouds.RESOLUTION)
                 context.drawImage(layerFront, x, y);
 
-        context.strokeStyle = "black";
-        context.beginPath();
-        context.moveTo(-20, 0);
-        context.lineTo(20, 0);
-        context.moveTo(0, -20);
-        context.lineTo(0, 20);
-        context.stroke();
-
         context.restore();
     };
 
@@ -66,6 +58,5 @@ const Clouds = function() {
 
 Clouds.RESOLUTION = 512;
 Clouds.SCALE = 2;
-Clouds.SPEED = 600;
 Clouds.SPEED_SCALE_BACK = 0.6;
 Clouds.SPEED_SCALE_FRONT = 1.2;
