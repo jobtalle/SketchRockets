@@ -49,6 +49,14 @@ const Clouds = function() {
             for (let x = Math.floor(-radius / Clouds.RESOLUTION) * Clouds.RESOLUTION + shiftFront; x < radius; x += Clouds.RESOLUTION)
                 context.drawImage(layerFront, x, y);
 
+        context.strokeStyle = "black";
+        context.beginPath();
+        context.moveTo(-20, 0);
+        context.lineTo(20, 0);
+        context.moveTo(0, -20);
+        context.lineTo(0, 20);
+        context.stroke();
+
         context.restore();
     };
 

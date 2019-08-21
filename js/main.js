@@ -10,6 +10,7 @@ const resize = () => {
     canvas.width = wrapper.offsetWidth;
     canvas.height = wrapper.offsetHeight;
     radius = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height) * 0.5;
+    sky.setOffset(canvas.width);
 };
 
 const update = timeStep => {
