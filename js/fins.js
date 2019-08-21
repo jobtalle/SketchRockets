@@ -35,30 +35,27 @@ const Fins = function(length, width, widths, step) {
             makeOffsetsPower();
     };
 
-    const drawFin = (context, spin, stroke) => {
-        context.save();
-        context.scale(1, Math.sin(spin * Math.PI * 2));
+    const drawFin = (context, spin) => {
+        const s = Math.sin(spin * Math.PI * 2);
 
         context.beginPath();
         context.moveTo(
             -widths.length * step,
-            -widths[widths.length - 1]);
+            -widths[widths.length - 1] * s);
 
         for (let i = 1; i < segments; ++i)
             context.lineTo(
                 (-widths.length + i) * step,
-                -widths[widths.length - 1 - i]);
+                -widths[widths.length - 1 - i] * s);
 
         for (let i = segments; i-- > 0;)
             context.lineTo(
                 (-widths.length + i) * step,
-                -widths[widths.length - 1 - i] - offsets[segments - i - 1]);
+                (-widths[widths.length - 1 - i] - offsets[segments - i - 1]) * s);
 
         context.closePath();
         context.fill();
         context.stroke();
-
-        context.restore();
     };
 
     const setSpins = spin => {
