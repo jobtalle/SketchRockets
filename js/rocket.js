@@ -6,6 +6,8 @@ const Rocket = function(x, y, trailLength) {
     const noiseX = cubicNoiseConfig(Math.random());
     const noiseY = cubicNoiseConfig(Math.random());
     const vxFactor = 4;
+    let vx = 0;
+    let vy = 0;
     let noiseDist = 0;
     let angle = 0;
     let velocity = 0;
@@ -20,8 +22,8 @@ const Rocket = function(x, y, trailLength) {
 
         angle = Math.atan2((yAim - y) * angleCompensation, xAim - x + skySpeed);
 
-        const vx = Math.cos(angle) * velocity;
-        const vy = Math.sin(angle) * (velocity + skySpeed);
+        vx = Math.cos(angle) * velocity;
+        vy = Math.sin(angle) * (velocity + skySpeed);
 
         x += vx * timeStep;
         y += vy * timeStep;
@@ -37,7 +39,7 @@ const Rocket = function(x, y, trailLength) {
         context.translate(x, y);
         context.rotate(angle);
 
-        body.draw(context);
+        body.draw(context, vy);
 
         context.restore();
     };

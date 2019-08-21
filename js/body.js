@@ -31,7 +31,7 @@ const Body = function(length) {
     };
 
     const makeWidths = () => {
-        if (Math.random() < 0.9)
+        if (Math.random() < 0.5)
             makeWidthsRound();
         else
             makeWidthsTube();
@@ -39,11 +39,11 @@ const Body = function(length) {
 
     this.getTrailOffset = () => (nozzle.getLength() - nozzle.getInset()) * 0.5;
 
-    this.draw = context => {
+    this.draw = (context, vy) => {
         context.save();
         context.translate(-length * 0.5, 0);
 
-        nozzle.draw(context);
+        nozzle.draw(context, vy);
 
         context.beginPath();
         context.moveTo(widths.length * step, 0);

@@ -18,9 +18,10 @@ const Nozzle = function(width) {
     this.getLength = () => length;
     this.getInset = () => inset;
 
-    this.draw = context => {
+    this.draw = (context, vy) => {
         context.save();
 
+        context.rotate(vy * Nozzle.SWIZZLE_FACTOR);
         context.translate(inset, 0);
 
         context.beginPath();
@@ -61,3 +62,4 @@ Nozzle.NOSE_POWER_MIN = 0.2;
 Nozzle.NOSE_POWER_MAX = 1.4;
 Nozzle.INSET_MIN = 0.1;
 Nozzle.INSET_MAX = 0.4;
+Nozzle.SWIZZLE_FACTOR = 0.0005;
