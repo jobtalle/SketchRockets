@@ -43,7 +43,7 @@ const Rocket = function(x, y, trailLength) {
     };
 };
 
-Rocket.TRAIL_SPEED = 200;
+Rocket.TRAIL_SPEED = 300;
 Rocket.NOISE_SCALE = 2.2;
 Rocket.AIM_DISTANCE = 800;
 Rocket.AIM_WIGGLE_X = 100;
