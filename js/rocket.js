@@ -1,5 +1,6 @@
 const Rocket = function(x, y, trailLength) {
     const trail = new Trail(trailLength);
+    const length = 140;
     const angleCompensation = 3;
     const noiseX = cubicNoiseConfig(Math.random());
     const noiseY = cubicNoiseConfig(Math.random());
@@ -12,7 +13,7 @@ const Rocket = function(x, y, trailLength) {
 
     this.update = (timeStep, skySpeed) => {
         trail.update(timeStep, skySpeed + Rocket.TRAIL_SPEED);
-        trail.append(x, y);
+        trail.append(x - Math.cos(angle) * length * 0.5, y - Math.sin(angle) * length * 0.5);
 
         noiseDist += timeStep * Rocket.NOISE_SCALE;
         xAim = Rocket.AIM_DISTANCE + (cubicNoiseSample1(noiseX, noiseDist) - 0.5) * Rocket.AIM_WIGGLE_X * 2;
@@ -35,7 +36,7 @@ const Rocket = function(x, y, trailLength) {
 
         context.fillStyle = "#ce3927";
         context.beginPath();
-        context.rect(-70, -20, 140, 40);
+        context.rect(-length * 0.5, -20, length, 40);
         context.fill();
 
         context.restore();
@@ -45,6 +46,6 @@ const Rocket = function(x, y, trailLength) {
 Rocket.TRAIL_SPEED = 200;
 Rocket.NOISE_SCALE = 2.2;
 Rocket.AIM_DISTANCE = 800;
-Rocket.AIM_WIGGLE_X = 200;
-Rocket.AIM_WIGGLE_Y = 400;
+Rocket.AIM_WIGGLE_X = 100;
+Rocket.AIM_WIGGLE_Y = 300;
 Rocket.DAMPING = 0.5;

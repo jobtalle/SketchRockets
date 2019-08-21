@@ -2,14 +2,13 @@ const Trail = function(length) {
     const Point = function(x, y) {
         this.x = x;
         this.y = y;
-        this.thickness = 0;
-        this.expansionRate = Trail.EXPANSION_RATE_MIN + (Trail.EXPANSION_RATE_MAX - Trail.EXPANSION_RATE_MIN) * Math.random();
+        this.thickness = Trail.THICKNESS_MIN + (Trail.THICKNESS_MAX - Trail.THICKNESS_MIN) * Math.random();
         this.life = 0;
     };
 
-    Point.prototype.expand = function(timeStep) {
+    Point.prototype.update = function(timeStep, speed) {
         this.life += timeStep;
-        this.thickness += timeStep * this.expansionRate;
+        this.x -= timeStep * speed;
     };
 
     const points = [];
@@ -35,9 +34,7 @@ const Trail = function(length) {
 
     this.update = (timeStep, speed) => {
         for (let i = 1; i < points.length; ++i) {
-            points[i].expand(timeStep);
-
-            points[i].x -= timeStep * speed;
+            points[i].update(timeStep, speed);
         }
     };
 
@@ -58,10 +55,10 @@ const Trail = function(length) {
         context.moveTo(points[0].x, points[0].y);
 
         for (let i = 1; i < points.length; ++i)
-            context.lineTo(points[i].x, points[i].y + points[i].thickness * Math.sqrt(points[i].life));
+            context.lineTo(points[i].x, points[i].y + points[i].thickness * Math.pow(points[i].life, Trail.POWER));
 
         for (let i = points.length; i-- > 1;)
-            context.lineTo(points[i].x, points[i].y - points[i].thickness * Math.sqrt(points[i].life));
+            context.lineTo(points[i].x, points[i].y - points[i].thickness * Math.pow(points[i].life, Trail.POWER));
 
         context.closePath();
         context.fill();
@@ -73,7 +70,8 @@ Trail.COLORS = [
     "rgba(205,205,205,0.58)"
 ];
 Trail.RESOLUTION = 32;
+Trail.POWER = 0.7;
 Trail.EXPANSION = 40;
-Trail.EXPANSION_RATE_MIN = 100;
-Trail.EXPANSION_RATE_MAX = 250;
+Trail.THICKNESS_MIN = 50;
+Trail.THICKNESS_MAX = 150;
 Trail.LIGHT_RADIUS = 256;
