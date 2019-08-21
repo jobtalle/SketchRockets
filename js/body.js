@@ -17,7 +17,7 @@ const Body = function(length) {
         }
 
         nozzle = new Nozzle(width);
-        fins = new Fins(length + nozzle.getLength(), widths, step);
+        fins = new Fins(length + nozzle.getLength(), width, widths, step);
     };
 
     const makeWidthsTube = () => {
@@ -30,7 +30,7 @@ const Body = function(length) {
         }
 
         nozzle = new Nozzle(width);
-        fins = new Fins(length, widths, step);
+        fins = new Fins(length, width, widths, step);
     };
 
     const makeWidths = () => {
