@@ -2,17 +2,24 @@ const TIME_STEP_MAX = 0.1;
 
 const wrapper = document.getElementById("wrapper");
 const canvas = document.getElementById("renderer");
+const sky = new Sky();
 let lastDate = new Date();
+let radius = 0;
 
 const resize = () => {
     canvas.width = wrapper.offsetWidth;
     canvas.height = wrapper.offsetHeight;
+    radius = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height) * 0.5;
 };
 
 const update = timeStep => {
+    sky.update(timeStep);
+
     const context = canvas.getContext("2d");
 
     context.clearRect(0, 0, canvas.width, canvas.height);
+
+    sky.draw(context, canvas.width * 0.5, canvas.height * 0.5, radius);
 };
 
 const loopFunction = () => {
