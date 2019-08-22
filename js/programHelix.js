@@ -1,4 +1,5 @@
 const ProgramHelix = function(rockets, offset) {
+    const speed = ProgramHelix.SPEED_MIN + (ProgramHelix.SPEED_MAX - ProgramHelix.SPEED_MIN) * Math.random();
     const aims = [
         new AimChase(
             offset,
@@ -34,7 +35,7 @@ const ProgramHelix = function(rockets, offset) {
     };
 
     this.update = timeStep => {
-        angle += timeStep * ProgramHelix.SPEED;
+        angle += timeStep * speed;
 
         aims[0].setXOffset(offset * ProgramHelix.X_OFFSET * Math.sin(angle));
         aims[0].setYOffset(offset * ProgramHelix.Y_OFFSET * Math.sin(angle));
@@ -50,6 +51,7 @@ const ProgramHelix = function(rockets, offset) {
     spawn();
 };
 
-ProgramHelix.SPEED = 2.5;
-ProgramHelix.X_OFFSET = 0.1;
-ProgramHelix.Y_OFFSET = 0.4;
+ProgramHelix.SPEED_MIN = 2;
+ProgramHelix.SPEED_MAX = 4;
+ProgramHelix.X_OFFSET = 0.2;
+ProgramHelix.Y_OFFSET = 0.3;

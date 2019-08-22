@@ -16,7 +16,7 @@ const Palette = function() {
     make();
 };
 
-Palette.DARK_MULTIPLIER = 0.6;
+Palette.DARK_MULTIPLIER = 0.7;
 Palette.SATURATION = 0.5;
 Palette.VALUE = 0.65;
 Palette.FIN_HUE_OFFSET = 0.2;

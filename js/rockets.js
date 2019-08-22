@@ -55,21 +55,25 @@ Rockets.PROGRAM_BARRAGE = "barrage";
 Rockets.PROGRAM_HELIX = "helix";
 Rockets.PROGRAMS = [
     Rockets.PROGRAM_ASCENT,
+    Rockets.PROGRAM_ASCENT,
     Rockets.PROGRAM_BARRAGE,
+    Rockets.PROGRAM_BARRAGE,
+    Rockets.PROGRAM_BARRAGE,
+    Rockets.PROGRAM_HELIX,
     Rockets.PROGRAM_HELIX
 ];
 Rockets.PROGRAM_DURATIONS = {
     "ascent": {
         "min": 4,
-        "max": 10
+        "max": 11
     },
     "barrage": {
         "min": 6,
-        "max": 10
+        "max": 11
     },
     "helix": {
-        "min": 4,
-        "max": 12
+        "min": 7,
+        "max": 13
     }
 };
 Rockets.X_OFFSET = 300;
