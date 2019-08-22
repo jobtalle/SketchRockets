@@ -4,6 +4,7 @@ const Fins = function(length, width, widths, step) {
     const spacing = 1 / count;
     const spins = new Array(count);
     const offsets = new Array(segments);
+    const shift = Fins.SHIFT_MIN + (Fins.SHIFT_MAX - Fins.SHIFT_MIN) * Math.random();
     let maxWidth = width;
     let frontThreshold = 0;
 
@@ -63,7 +64,7 @@ const Fins = function(length, width, widths, step) {
 
         for (let i = segments; i-- > 0;)
             context.lineTo(
-                (-widths.length + i) * step,
+                (-widths.length + i) * step + (segments - i - 1) * shift,
                 (-widths[widths.length - 1 - i] - offsets[segments - i - 1]) * s);
 
         context.closePath();
@@ -114,8 +115,10 @@ Fins.LENGTH_MIN = 0.3;
 Fins.LENGTH_MAX = 0.7;
 Fins.COUNT_MIN = 3;
 Fins.COUNT_MAX = 7;
-Fins.COUNT_POWER = 2.5;
+Fins.COUNT_POWER = 3;
 Fins.OFFSET_MIN = 0.5;
 Fins.OFFSET_MAX = 2.5;
 Fins.POWER_MIN = 0.4;
 Fins.POWER_MAX = 2;
+Fins.SHIFT_MIN = -8;
+Fins.SHIFT_MAX = 4;

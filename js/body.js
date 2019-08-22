@@ -61,11 +61,10 @@ const Body = function(length, palette) {
 
         context.save();
 
-        nozzle.draw(context, -length * 0.5 + nozzle.getInset(), vy);
-
         context.translate(nose + length * 0.5, 0);
 
         fins.drawBack(context, spin, gradientFins, Body.STROKE);
+        nozzle.draw(context, -length + nozzle.getInset() - nose, vy);
         drawTube(context, widths, step, gradientBody, Body.STROKE);
         fins.drawFront(context, gradientFins, Body.STROKE);
 
