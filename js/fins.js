@@ -1,16 +1,22 @@
 const Fins = function(length, width, widths, step) {
-    const count = Fins.COUNT_MIN + Math.floor((Fins.COUNT_MAX - Fins.COUNT_MIN + 1) * Math.random());
-    const segments = Math.max(2, Math.ceil(length * (Fins.LENGTH_MIN + (Fins.LENGTH_MAX - Fins.LENGTH_MIN) * Math.random()) / step));
+    const count = Fins.COUNT_MIN + Math.floor((Fins.COUNT_MAX - Fins.COUNT_MIN + 1) * Math.pow(Math.random(), Fins.COUNT_POWER));
+    const segments = Math.max(Fins.SEGMENTS_MIN, Math.ceil(length * (Fins.LENGTH_MIN + (Fins.LENGTH_MAX - Fins.LENGTH_MIN) * Math.random()) / step));
     const spacing = 1 / count;
     const spins = new Array(count);
     const offsets = new Array(segments);
+    let maxWidth = width;
     let frontThreshold = 0;
+
+    const makeOvershoot = () => {
+        return Math.random() < Fins.POWER_OVERSHOOT_CHANCE ? Fins.POWER_OVERSHOT_MIN + (Fins.POWER_OVERSHOT_MAX - Fins.POWER_OVERSHOT_MIN) * Math.random() : 1;
+    };
 
     const makeOffsetsTriangle = () => {
         const offset = width * (Fins.OFFSET_MIN + (Fins.OFFSET_MAX - Fins.OFFSET_MIN) * Math.random());
+        const multiplier = makeOvershoot();
 
         for (let i = 0; i < segments; ++i) {
-            const f = i / (segments - 1);
+            const f = Math.min(1, multiplier * i / (segments - 1));
 
             offsets[i] = offset * f;
         }
@@ -19,7 +25,7 @@ const Fins = function(length, width, widths, step) {
     const makeOffsetsPower = () => {
         const power = Fins.POWER_MIN + (Fins.POWER_MAX - Fins.POWER_MIN) * Math.random();
         const offset = width * (Fins.OFFSET_MIN + (Fins.OFFSET_MAX - Fins.OFFSET_MIN) * Math.random());
-        const multiplier = Math.random() < Fins.POWER_OVERSHOOT_CHANCE ? Fins.POWER_OVERSHOT_MIN + (Fins.POWER_OVERSHOT_MAX - Fins.POWER_OVERSHOT_MIN) * Math.random() : 1;
+        const multiplier = makeOvershoot();
 
         for (let i = 0; i < segments; ++i) {
             const f = Math.min(1, multiplier * i / (segments - 1));
@@ -33,6 +39,13 @@ const Fins = function(length, width, widths, step) {
             makeOffsetsTriangle();
         else
             makeOffsetsPower();
+
+        for (let i = 0; i < segments; ++i) {
+            const w = widths[widths.length - 1 - i] + offsets[segments - 1 - i];
+
+            if (w > maxWidth)
+                maxWidth = w;
+        }
     };
 
     const drawFin = (context, spin) => {
@@ -69,6 +82,8 @@ const Fins = function(length, width, widths, step) {
             ++frontThreshold;
     };
 
+    this.getMaxWidth = () => maxWidth;
+
     this.drawBack = (context, spin, fill, stroke) => {
         setSpins(spin);
 
@@ -91,6 +106,7 @@ const Fins = function(length, width, widths, step) {
 };
 
 Fins.TRIANGLE_CHANCE = 0.3;
+Fins.SEGMENTS_MIN = 3;
 Fins.POWER_OVERSHOOT_CHANCE = 0.7;
 Fins.POWER_OVERSHOT_MIN = 1.2;
 Fins.POWER_OVERSHOT_MAX = 2;
@@ -98,6 +114,7 @@ Fins.LENGTH_MIN = 0.3;
 Fins.LENGTH_MAX = 0.7;
 Fins.COUNT_MIN = 3;
 Fins.COUNT_MAX = 7;
+Fins.COUNT_POWER = 2.5;
 Fins.OFFSET_MIN = 0.5;
 Fins.OFFSET_MAX = 2.5;
 Fins.POWER_MIN = 0.4;

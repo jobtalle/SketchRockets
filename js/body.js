@@ -49,7 +49,7 @@ const Body = function(length, palette) {
 
     this.draw = (context, vy, spin) => {
         const gradientBody = context.createLinearGradient(0, -maxWidth, 0, maxWidth);
-        const gradientFins = context.createLinearGradient(0, -maxWidth, 0, maxWidth);
+        const gradientFins = context.createLinearGradient(0, -fins.getMaxWidth(), 0, fins.getMaxWidth());
 
         gradientBody.addColorStop(0, palette.colorBodyShade);
         gradientBody.addColorStop(0.5, palette.colorBody);
