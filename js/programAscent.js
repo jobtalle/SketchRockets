@@ -6,7 +6,7 @@ const ProgramAscent = function(rockets, offset) {
     };
 
     this.finish = () => {
-        aim.disappear();
+        aim.disappear(1, 0);
     };
 
     rockets.push(new Rocket(

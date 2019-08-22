@@ -25,12 +25,13 @@ const ProgramBarrage = function(rockets, offset) {
 
     this.finish = () => {
         for (const aim of aims)
-            aim.disappear();
+            aim.disappear(1, -(aim.getY() / offset) * ProgramBarrage.SIDE_SPEED);
     };
 
     spawn();
 };
 
+ProgramBarrage.SIDE_SPEED = 8;
 ProgramBarrage.COUNT_MIN = 2;
 ProgramBarrage.COUNT_MAX = 5;
 ProgramBarrage.COUNT_POWER = 2.5;
