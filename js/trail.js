@@ -29,7 +29,7 @@ const Trail = function(offset) {
                 points[0].y = y;
             }
 
-            while (points.length > 1 && points[points.length - 1].x < -offset)
+            while (points.length > 1 && points[points.length - 1].x < -offset - Trail.EXTRA_LENGTH)
                 points.pop();
         }
     };
@@ -74,6 +74,7 @@ Trail.COLORS = [
     "rgb(255,199,15)",
     "rgba(205,205,205,0.58)"
 ];
+Trail.EXTRA_LENGTH = 128;
 Trail.RESOLUTION = 48;
 Trail.POWER = 0.7;
 Trail.EXPANSION = 1.5;

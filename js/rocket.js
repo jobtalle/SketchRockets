@@ -34,7 +34,10 @@ const Rocket = function(x, y, offset, body, aim) {
         y += vy * timeStep;
 
         trail.update(timeStep, skySpeed + Rocket.TRAIL_SPEED);
-        trail.append(x - Math.cos(angle) * body.getTrailOffset(), y - Math.sin(angle) * body.getTrailOffset(), -vy);
+        trail.append(
+            x - Math.cos(angle) * body.getTrailOffset(),
+            y - Math.sin(angle) * body.getTrailOffset(),
+            -vy, body.getTrailWidth());
     };
 
     this.draw = context => {

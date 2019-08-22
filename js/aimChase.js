@@ -10,6 +10,9 @@ const AimChase = function(offset, xWiggle, yWiggle, xOffset, yOffset) {
     let vya = 0;
     let disappearing = false;
 
+    this.setXOffset = offset => xOffset = offset;
+    this.setYOffset = offset => yOffset = offset;
+
     this.disappear = (dx, dy) => {
         vxa = dx;
         vya = dy;

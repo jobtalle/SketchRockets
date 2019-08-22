@@ -1,9 +1,11 @@
 const ProgramBarrage = function(rockets, offset) {
     const count = ProgramBarrage.COUNT_MIN +Math.floor((ProgramBarrage.COUNT_MAX - ProgramBarrage.COUNT_MIN + 1) * Math.pow(Math.random(), ProgramBarrage.COUNT_POWER));
-    const body = new Body(new Palette());
     const aims = [];
+    let delay = ProgramBarrage.DELAY;
 
     const spawn = () => {
+        const body = new Body(new Palette());
+
         for (let i = 0; i < count; ++i) {
             const f = i / (count - 1);
             const y = offset * (-0.5 + f) * ProgramBarrage.SPACING;
@@ -12,7 +14,7 @@ const ProgramBarrage = function(rockets, offset) {
             aims.push(aim);
             rockets.push(new Rocket(
                 -offset,
-                y,
+                y * ProgramBarrage.POSITION_SCALE_INITIAL,
                 offset,
                 body,
                 aim));
@@ -20,17 +22,21 @@ const ProgramBarrage = function(rockets, offset) {
     };
 
     this.update = timeStep => {
+        if (delay !== 0) if ((delay -= timeStep) < 0) {
+            delay = 0;
 
+            spawn();
+        }
     };
 
     this.finish = () => {
         for (const aim of aims)
             aim.disappear(1, -(aim.getY() / offset) * ProgramBarrage.SIDE_SPEED);
     };
-
-    spawn();
 };
 
+ProgramBarrage.DELAY = 1.5;
+ProgramBarrage.POSITION_SCALE_INITIAL = 0.1;
 ProgramBarrage.SIDE_SPEED = 8;
 ProgramBarrage.COUNT_MIN = 2;
 ProgramBarrage.COUNT_MAX = 5;

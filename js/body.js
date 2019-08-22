@@ -46,7 +46,8 @@ const Body = function(palette) {
             makeWidthsTube();
     };
 
-    this.getTrailOffset = () => (length + nozzle.getLength()) * 0.5 - nozzle.getInset();
+    this.getTrailOffset = () => (length + nozzle.getLength() - nozzle.getInset()) * 0.5;
+    this.getTrailWidth = () => width;
 
     this.draw = (context, vy, spin) => {
         const gradientBody = context.createLinearGradient(0, -maxWidth, 0, maxWidth);
