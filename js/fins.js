@@ -120,5 +120,5 @@ Fins.OFFSET_MIN = 0.5;
 Fins.OFFSET_MAX = 2.5;
 Fins.POWER_MIN = 0.4;
 Fins.POWER_MAX = 2;
-Fins.SHIFT_MIN = -8;
-Fins.SHIFT_MAX = 4;
+Fins.SHIFT_MIN = -6;
+Fins.SHIFT_MAX = 3;

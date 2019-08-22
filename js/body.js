@@ -1,4 +1,5 @@
-const Body = function(length, palette) {
+const Body = function(palette) {
+    const length = Body.LENGTH_MIN + (Body.LENGTH_MAX - Body.LENGTH_MIN) * Math.random();
     const widths = [];
     const nose = (Body.NOSE_MIN + (Body.NOSE_MAX - Body.NOSE_MIN) * Math.random()) * length;
     const segments = Math.ceil((length + nose) / Body.RESOLUTION);
@@ -85,3 +86,5 @@ Body.WIDTH_MAX_PIXELS = 28;
 Body.RESOLUTION = 16;
 Body.NOSE_MIN = 0.2;
 Body.NOSE_MAX = 0.7;
+Body.LENGTH_MIN = 50;
+Body.LENGTH_MAX = 150;

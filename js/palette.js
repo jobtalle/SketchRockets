@@ -1,4 +1,4 @@
-const Palette = function(context) {
+const Palette = function() {
     const make = () => {
         const hueBody = Math.random();
         const hueFin = (hueBody + Palette.FIN_HUE_OFFSET + (1 - Palette.FIN_HUE_OFFSET * 2) * Math.random()) % 1;
