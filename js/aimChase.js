@@ -28,7 +28,7 @@ const AimChase = function() {
 };
 
 AimChase.AIM_DISTANCE = 800;
-AimChase.WIGGLE_X = 150;
-AimChase.WIGGLE_Y = 300;
+AimChase.WIGGLE_X = 250;
+AimChase.WIGGLE_Y = 400;
 AimChase.NOISE_SCALE = 2.2;
-AimChase.DISAPPEAR_ACCELERATION = -60;
+AimChase.DISAPPEAR_ACCELERATION = -140;

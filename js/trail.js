@@ -1,4 +1,4 @@
-const Trail = function(length) {
+const Trail = function(offset) {
     const Point = function(x, y, ySpeed) {
         this.x = x;
         this.y = y;
@@ -28,16 +28,15 @@ const Trail = function(length) {
                 points[0].x = x;
                 points[0].y = y;
             }
-        }
 
-        if (points.length * Trail.RESOLUTION > length)
-            points.pop();
+            while (points.length > 1 && points[points.length - 1].x < -offset)
+                points.pop();
+        }
     };
 
     this.update = (timeStep, speed) => {
-        for (let i = 1; i < points.length; ++i) {
+        for (let i = 1; i < points.length; ++i)
             points[i].update(timeStep, speed);
-        }
     };
 
     this.draw = context => {
@@ -77,7 +76,7 @@ Trail.COLORS = [
 ];
 Trail.RESOLUTION = 32;
 Trail.POWER = 0.7;
-Trail.EXPANSION = 40;
+Trail.EXPANSION = 80;
 Trail.THICKNESS_MIN = 50;
 Trail.THICKNESS_MAX = 150;
 Trail.LIGHT_RADIUS = 256;

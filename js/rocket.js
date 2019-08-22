@@ -1,5 +1,5 @@
-const Rocket = function(x, y, trailLength, body, aim) {
-    const trail = new Trail(trailLength);
+const Rocket = function(x, y, offset, body, aim) {
+    const trail = new Trail(offset);
     const vxFactor = 4;
     const spinSpeed = Rocket.SPIN_SPEED_MIN + (Rocket.SPIN_SPEED_MAX - Rocket.SPIN_SPEED_MIN) * Math.random();
     let spin = 0;
