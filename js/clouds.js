@@ -29,7 +29,7 @@ const Clouds = function() {
             for (let i = 0; i < octaves.length; ++i) {
                 const scale = 1 / (Clouds.PHASE / Clouds.SCALE) * (i + 1);
 
-                transparency += octaves[i] * Math.max(0, cubicNoiseSample2(noises[i], 4 + x * scale, 4 + y * scale) - Clouds.DEADZONE);
+                transparency += octaves[i] * Math.max(0, cubicNoiseSample2(noises[i], x * scale, y * scale) - Clouds.DEADZONE);
             }
 
             imageData.data[index] = imageData.data[index + 1] = imageData.data[index + 2] = 255;
@@ -45,9 +45,13 @@ const Clouds = function() {
         context.save();
         context.scale(Clouds.SCALE, Clouds.SCALE);
 
-        for (let y = Math.floor(-radius / Clouds.RESOLUTION) * Clouds.RESOLUTION; y < radius; y += Clouds.RESOLUTION)
-            for (let x = Math.floor(-radius / Clouds.RESOLUTION) * Clouds.RESOLUTION + shift; x < radius; x += Clouds.RESOLUTION)
-                context.drawImage(layer, x, y);
+        context.fillStyle = context.createPattern(layer, "repeat");
+        context.beginPath();
+        context.rect(-radius, -radius, radius + radius, radius + radius);
+
+        context.translate(shift, 0);
+        context.fill();
+        context.translate(-shift, 0);
 
         context.restore();
     };

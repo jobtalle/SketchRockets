@@ -13,7 +13,6 @@ const Sky = function() {
         context.save();
         context.translate(xCenter, yCenter);
         context.rotate(Sky.ANGLE);
-        context.translate(radius * Sky.VIEW_SHIFT, 0);
 
         clouds.drawBack(context, radius);
         rockets.draw(context);
@@ -25,4 +24,3 @@ const Sky = function() {
 
 Sky.ANGLE = Math.PI * 1.65;
 Sky.SPEED = 1600;
-Sky.VIEW_SHIFT = 0.2;
