@@ -56,10 +56,10 @@ const Trail = function(offset) {
         context.moveTo(points[0].x, points[0].y);
 
         for (let i = 1; i < points.length; ++i)
-            context.lineTo(points[i].x, points[i].y + points[i].thickness * Math.pow(points[i].life, Trail.POWER));
+            context.lineTo(points[i].x, points[i].y + points[i].thickness * Math.pow(points[i].life * Trail.EXPANSION, Trail.POWER));
 
         for (let i = points.length; i-- > 1;)
-            context.lineTo(points[i].x, points[i].y - points[i].thickness * Math.pow(points[i].life, Trail.POWER));
+            context.lineTo(points[i].x, points[i].y - points[i].thickness * Math.pow(points[i].life * Trail.EXPANSION, Trail.POWER));
 
         context.closePath();
         context.fill();
@@ -74,9 +74,9 @@ Trail.COLORS = [
     "rgb(255,199,15)",
     "rgba(205,205,205,0.58)"
 ];
-Trail.RESOLUTION = 32;
+Trail.RESOLUTION = 48;
 Trail.POWER = 0.7;
-Trail.EXPANSION = 80;
+Trail.EXPANSION = 1.5;
 Trail.THICKNESS_MIN = 50;
 Trail.THICKNESS_MAX = 150;
 Trail.LIGHT_RADIUS = 256;

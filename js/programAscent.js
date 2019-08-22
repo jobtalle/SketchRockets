@@ -1,5 +1,5 @@
 const ProgramAscent = function(rockets, offset) {
-    const aim = new AimChase();
+    const aim = new AimChase(offset, 1, 1, 0, 0);
 
     this.update = timeStep => {
 

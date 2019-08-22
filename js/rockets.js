@@ -12,6 +12,10 @@ const Rockets = function() {
                 program = new ProgramAscent(rockets, offset);
 
                 break;
+            case Rockets.PROGRAM_BARRAGE:
+                program = new ProgramBarrage(rockets, offset);
+
+                break;
             case Rockets.PROGRAM_TWINS:
                 program = new ProgramAscent(rockets, offset);
 
@@ -47,15 +51,21 @@ const Rockets = function() {
 };
 
 Rockets.PROGRAM_ASCENT = "ascent";
+Rockets.PROGRAM_BARRAGE = "barrage";
 Rockets.PROGRAM_TWINS = "twins";
 Rockets.PROGRAMS = [
     Rockets.PROGRAM_ASCENT,
+    Rockets.PROGRAM_BARRAGE, Rockets.PROGRAM_BARRAGE, Rockets.PROGRAM_BARRAGE, Rockets.PROGRAM_BARRAGE,
     Rockets.PROGRAM_TWINS
 ];
 Rockets.PROGRAM_DURATIONS = {
     "ascent": {
         "min": 4,
-        "max": 8
+        "max": 10
+    },
+    "barrage": {
+        "min": 6,
+        "max": 10
     },
     "twins": {
         "min": 4,
