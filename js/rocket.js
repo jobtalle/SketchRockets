@@ -1,4 +1,5 @@
 const Rocket = function(x, y, offset, body, aim) {
+    const spinNoise = cubicNoiseConfig(Math.random());
     const trail = new Trail(offset);
     const vxFactor = 4;
     const spinSpeed = Rocket.SPIN_SPEED_MIN + (Rocket.SPIN_SPEED_MAX - Rocket.SPIN_SPEED_MIN) * Math.random();
@@ -7,13 +8,15 @@ const Rocket = function(x, y, offset, body, aim) {
     let vy = 0;
     let angle = 0;
     let velocity = 0;
+    let lifeTime = 0;
 
     this.getX = () => x;
 
     this.update = (timeStep, skySpeed) => {
         aim.update(timeStep);
 
-        spin += spinSpeed * timeStep;
+        lifeTime += timeStep;
+        spin += (cubicNoiseSample1(spinNoise, lifeTime * Rocket.SPIN_NOISE_SCALE) - 0.5) * 2 * spinSpeed * timeStep;
 
         if (spin < 0)
             ++spin;
@@ -51,5 +54,6 @@ Rocket.ANGLE_AIM_DISTANCE = 800;
 Rocket.ANGLE_COMPENSATION = 3;
 Rocket.TRAIL_SPEED = 100;
 Rocket.DAMPING = 0.7;
-Rocket.SPIN_SPEED_MIN = -0.7;
-Rocket.SPIN_SPEED_MAX = 0.7;
+Rocket.SPIN_SPEED_MIN = 0.5;
+Rocket.SPIN_SPEED_MAX = 1.5;
+Rocket.SPIN_NOISE_SCALE = 0.7;
