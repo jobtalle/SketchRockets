@@ -8,6 +8,8 @@ const Rocket = function(x, y, trailLength, body, aim) {
     let angle = 0;
     let velocity = 0;
 
+    this.getX = () => x;
+
     this.update = (timeStep, skySpeed) => {
         aim.update(timeStep);
 
@@ -47,7 +49,7 @@ const Rocket = function(x, y, trailLength, body, aim) {
 
 Rocket.ANGLE_AIM_DISTANCE = 800;
 Rocket.ANGLE_COMPENSATION = 3;
-Rocket.TRAIL_SPEED = 300;
+Rocket.TRAIL_SPEED = 100;
 Rocket.DAMPING = 0.7;
 Rocket.SPIN_SPEED_MIN = -0.7;
 Rocket.SPIN_SPEED_MAX = 0.7;

@@ -4,10 +4,10 @@ const Rockets = function() {
     let program = null;
     let programTimer = 0;
 
-    const cue = program => {
-        programTimer = Rockets.PROGRAM_DURATIONS[program].min + (Rockets.PROGRAM_DURATIONS[program].max - Rockets.PROGRAM_DURATIONS[program].min) * Math.random();
+    const cue = programName => {
+        programTimer = Rockets.PROGRAM_DURATIONS[programName].min + (Rockets.PROGRAM_DURATIONS[programName].max - Rockets.PROGRAM_DURATIONS[programName].min) * Math.random();
 
-        switch (program) {
+        switch (programName) {
             case Rockets.PROGRAM_ASCENT:
                 program = new ProgramAscent(rockets, offset);
 
@@ -32,8 +32,12 @@ const Rockets = function() {
             cue(Rockets.PROGRAMS[Math.floor(Math.random() * Rockets.PROGRAMS.length)]);
         }
 
-        for (const rocket of rockets)
-            rocket.update(timeStep, radius, skySpeed);
+        for (let i = rockets.length; i-- > 0;) {
+            rockets[i].update(timeStep, skySpeed);
+
+            if (rockets[i].getX() < -offset)
+                rockets.splice(i, 1);
+        }
     };
 
     this.draw = context => {
