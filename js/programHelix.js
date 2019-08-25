@@ -51,7 +51,7 @@ const ProgramHelix = function(rockets, offset) {
     spawn();
 };
 
-ProgramHelix.SPEED_MIN = 2;
-ProgramHelix.SPEED_MAX = 4;
+ProgramHelix.SPEED_MIN = 1.5;
+ProgramHelix.SPEED_MAX = 2.5;
 ProgramHelix.X_OFFSET = 0.2;
 ProgramHelix.Y_OFFSET = 0.3;

@@ -54,12 +54,10 @@ Rockets.PROGRAM_ASCENT = "ascent";
 Rockets.PROGRAM_BARRAGE = "barrage";
 Rockets.PROGRAM_HELIX = "helix";
 Rockets.PROGRAMS = [
+    Rockets.PROGRAM_BARRAGE,
+    Rockets.PROGRAM_BARRAGE,
     Rockets.PROGRAM_ASCENT,
     Rockets.PROGRAM_ASCENT,
-    Rockets.PROGRAM_BARRAGE,
-    Rockets.PROGRAM_BARRAGE,
-    Rockets.PROGRAM_BARRAGE,
-    Rockets.PROGRAM_HELIX,
     Rockets.PROGRAM_HELIX
 ];
 Rockets.PROGRAM_DURATIONS = {
